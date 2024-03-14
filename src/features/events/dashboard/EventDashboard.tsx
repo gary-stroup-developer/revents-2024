@@ -1,4 +1,6 @@
 import { Grid } from "semantic-ui-react"
+import EventList from "./EventList"
+import EventForm from "../form/EventForm"
 
 type Props = {
   data: string
@@ -8,10 +10,10 @@ const EventDashboard = (props: Props) => {
   return (
     <Grid>
       <Grid.Column width={10}>
-        <h2>Left column {props.data}</h2>
+        <EventList />
       </Grid.Column>
       <Grid.Column width={6}>
-        <h2>Right Column</h2>
+        <EventForm />
       </Grid.Column>
     </Grid>
   )
