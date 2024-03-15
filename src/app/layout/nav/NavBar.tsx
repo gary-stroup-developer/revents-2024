@@ -1,6 +1,6 @@
 import { Button, Container, Menu, MenuItem } from "semantic-ui-react"
 
-const NavBar = () => {
+const NavBar = ({setFormOpen}:{setFormOpen: (value:boolean)=> void}) => {
   return (
     <Menu inverted fixed="top">
         <Container>
@@ -9,7 +9,7 @@ const NavBar = () => {
             </MenuItem>
             <MenuItem name='Events' />
             <MenuItem>
-                <Button floated="right" positive inverted content='Create Event' />
+                <Button onClick={()=>setFormOpen(true)} floated="right" positive inverted content='Create Event' />
             </MenuItem>
             <MenuItem position="right">
                 <Button basic inverted content='Login' />

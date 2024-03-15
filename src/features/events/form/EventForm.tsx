@@ -1,7 +1,9 @@
 import { Button, Form, Header, Segment } from "semantic-ui-react"
 
-type Props = {}
-const EventForm = (props: Props) => {
+type Props = {
+    setFormOpen: (value:boolean) => void
+}
+const EventForm = ({setFormOpen}: Props) => {
   return (
     <Segment clearing>
         <Header content='Create Event' />
@@ -25,7 +27,7 @@ const EventForm = (props: Props) => {
                 <input type="text" placeholder="Date" />
             </Form.Field>
             <Button type="submit" floated="right" positive content="Submit" />
-            <Button type="button" floated="right" positive content="Cancel" />
+            <Button onClick={()=>setFormOpen(false)} type="button" floated="right" color="red" content="Cancel" />
         </Form>
     </Segment>
   )

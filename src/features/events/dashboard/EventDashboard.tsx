@@ -1,19 +1,33 @@
 import { Grid } from "semantic-ui-react"
 import EventList from "./EventList"
 import EventForm from "../form/EventForm"
+import { sampleData } from "../../../assets/Snippets/sampleData"
+import { useEffect, useState } from "react"
+import { AppEvent } from "../../../app/types/types"
 
 type Props = {
-  data: string
+  showForm: boolean
+  setFormOpen: (value:boolean) => void
 }
 
-const EventDashboard = (props: Props) => {
+const EventDashboard = ({showForm, setFormOpen}:Props) =>{
+  const [events, setEvents] = useState<AppEvent[]>([]);
+
+  useEffect(() => {
+    setEvents(sampleData); // TODO:
+  }, [])
+  
+
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventList />
+        <EventList data={events} />
       </Grid.Column>
       <Grid.Column width={6}>
-        <EventForm />
+        {
+          showForm && <EventForm setFormOpen={setFormOpen} />
+        }
+        
       </Grid.Column>
     </Grid>
   )
