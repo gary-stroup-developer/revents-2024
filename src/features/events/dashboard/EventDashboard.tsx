@@ -3,7 +3,7 @@ import EventList from "./EventList"
 import EventForm from "../form/EventForm"
 import { sampleData } from "../../../assets/Snippets/sampleData"
 import { useEffect, useState } from "react"
-import { AppEvent } from "../../../app/types/types"
+
 
 type Props = {
   showForm: boolean

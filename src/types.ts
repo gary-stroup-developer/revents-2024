@@ -1,4 +1,4 @@
-export type AppEvent = {
+type AppEvent = {
     id: string
     title: string
     date: string
@@ -11,7 +11,7 @@ export type AppEvent = {
     attendees: Attendee[]
 }
 
-export type Attendee = {
+type Attendee = {
     id: string
     name: string
     photoURL: string
