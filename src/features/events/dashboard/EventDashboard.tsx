@@ -1,16 +1,12 @@
 import { Grid } from "semantic-ui-react"
 import EventList from "./EventList"
-import EventForm from "../form/EventForm"
 import { sampleData } from "../../../assets/Snippets/sampleData"
 import { useEffect, useState } from "react"
 
 
-type Props = {
-  showForm: boolean
-  setFormOpen: (value:boolean) => void
-}
 
-const EventDashboard = ({showForm, setFormOpen}:Props) =>{
+
+const EventDashboard = () =>{
   const [events, setEvents] = useState<AppEvent[]>([]);
 
   useEffect(() => {
@@ -24,10 +20,8 @@ const EventDashboard = ({showForm, setFormOpen}:Props) =>{
         <EventList data={events} />
       </Grid.Column>
       <Grid.Column width={6}>
-        {
-          showForm && <EventForm setFormOpen={setFormOpen} />
-        }
-        
+          <h2>Filter</h2>
+
       </Grid.Column>
     </Grid>
   )
