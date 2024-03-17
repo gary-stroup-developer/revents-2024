@@ -1,18 +1,10 @@
 import { Grid } from "semantic-ui-react"
 import EventList from "./EventList"
-import { sampleData } from "../../../assets/Snippets/sampleData"
-import { useEffect, useState } from "react"
-
-
+import { useAppSelector } from "../../../app/store/hooks"
 
 
 const EventDashboard = () =>{
-  const [events, setEvents] = useState<AppEvent[]>([]);
-
-  useEffect(() => {
-    setEvents(sampleData); // TODO:
-  }, [])
-  
+  const {events} = useAppSelector(state => state.events);
 
   return (
     <Grid>
