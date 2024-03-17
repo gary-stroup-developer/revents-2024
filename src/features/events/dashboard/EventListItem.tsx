@@ -1,11 +1,15 @@
 import { Button, Icon, Item, ItemGroup, List, Segment, SegmentGroup } from "semantic-ui-react"
 import EventListAttendee from "./EventListAttendee"
+import { Link } from "react-router-dom"
+import { useAppDispatch } from "../../../app/store/hooks"
+import { deleteEvent } from "../eventSlice"
 
 
 type Props = {
     data: AppEvent
 }
 const EventListItem = ({data}: Props) => {
+    const dispatch = useAppDispatch();
   return (
     <SegmentGroup>
         <Segment>
@@ -32,13 +36,12 @@ const EventListItem = ({data}: Props) => {
                         <EventListAttendee key={value.id} attendee={value}/>
                     ))
                 }
-                
- 
             </List>
         </Segment>
         <Segment clearing>
             <span>{data.description}</span>
-            <Button color="teal" floated="right" content="view" />
+            <Button color="red" floated="right" content='Delete' onClick={()=>dispatch(deleteEvent(data.id))} />
+            <Button as={Link} to={`/events/${data.id}`} color="teal" floated="right" content="View" />
         </Segment>
     </SegmentGroup>
   )
