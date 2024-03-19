@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { eventSlice } from '../../features/events/eventSlice'
+import { modalSlice } from '../common/modals/modalsSlice'
 
 
 export const store = configureStore({
   reducer: {
-    events: eventSlice.reducer
+    events: eventSlice.reducer,
+    modals: modalSlice.reducer,
   }
 })
 
