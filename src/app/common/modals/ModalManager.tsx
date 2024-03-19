@@ -1,3 +1,4 @@
+import LoginForm from "../../../features/auth/LoginForm";
 import { useAppSelector } from "../../store/hooks"
 import TestModal from "./TestModal"
 
@@ -5,7 +6,8 @@ import TestModal from "./TestModal"
 
 const ModalManager = () => {
     const modalLookup = {
-        TestModal
+        TestModal,
+        LoginForm
     }
     const {type, data, open} = useAppSelector(state => state.modals);
 

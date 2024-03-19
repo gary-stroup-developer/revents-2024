@@ -16,3 +16,8 @@ type Attendee = {
     name: string
     photoURL: string
 }
+
+type User = {
+    email: string 
+    photoURL: string
+}

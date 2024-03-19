@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom"
 import { Button, Container, Menu, MenuItem } from "semantic-ui-react"
 import SignedInMenu from "./SignedInMenu"
-import { useState } from "react"
 import SignedOutButtons from "./SignedOutButtons"
+import { useAppSelector } from "../../store/hooks"
 
 const NavBar = () => {
-    const [auth, setAuth] = useState(false);
+    const {authenticated} = useAppSelector(state => state.auth);
   return (
     <Menu inverted fixed="top">
         <Container>
@@ -17,7 +17,7 @@ const NavBar = () => {
                 <Button as={NavLink} to="/createEvent" floated="right" positive inverted content='Create Event' />
             </MenuItem>
             {
-                auth ? <SignedInMenu setAuth={setAuth} /> : <SignedOutButtons setAuth={setAuth} />
+                authenticated ? <SignedInMenu /> : <SignedOutButtons />
             }
             
         </Container>
