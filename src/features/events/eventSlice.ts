@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { sampleData } from "../../assets/Snippets/sampleData"
+
 
 type State = {
     events: AppEvent[]
 }
 
 const initialState: State = {
-    events: sampleData
+    events: []
 }
 
 export const eventSlice = createSlice({

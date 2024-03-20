@@ -8,7 +8,7 @@ const Scratch = () => {
     <div>
         <h1>Scratch Page</h1>
         <Button
-        onClick={() => dispatch(openModal({type: 'TestModal',data: 'Gary and Camille are friends....that\'\s it.'}))}
+        onClick={() => dispatch(openModal({type: 'TestModal',data: 'Gary and Camille are friends....that\'s it.'}))}
         color="teal" content="Open Modal"/>
     </div>
   )
