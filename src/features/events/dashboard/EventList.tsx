@@ -1,3 +1,4 @@
+import { AppEvent } from "../../../types"
 import EventListItem from "./EventListItem"
 
 type Props = {

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { User } from "../../types"
 
 type State = {
     authenticated: boolean 

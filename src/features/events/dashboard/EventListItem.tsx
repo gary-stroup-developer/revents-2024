@@ -3,6 +3,7 @@ import EventListAttendee from "./EventListAttendee"
 import { Link } from "react-router-dom"
 import { useAppDispatch } from "../../../app/store/hooks"
 import { deleteEvent } from "../eventSlice"
+import { AppEvent } from "../../../types"
 
 
 type Props = {
