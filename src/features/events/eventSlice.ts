@@ -1,44 +1,48 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction} from "@reduxjs/toolkit"
 import { AppEvent} from "../../types"
-import { Timestamp } from "firebase/firestore"
+import { GenericActions, GenericState, createGenericSlice } from "../../app/store/genericSlice"
+
 
 
 
 type State = {
-    events: AppEvent[]
+    data: AppEvent[]
 }
 
 const initialState: State = {
-    events: []
+    data: []
 }
 
-export const eventSlice = createSlice({
+export const eventSlice = createGenericSlice({
     name: 'events',
-    initialState,
+    initialState: initialState as GenericState<AppEvent[]>,
     reducers: {
-        setEvents: {
+        success: {
             reducer: (state, action: PayloadAction<AppEvent[]>) => {
-                state.events = action.payload;
+                state.data = action.payload;
+                state.status = 'finished';
             },
-            prepare: (events: any) => {
+            prepare: (events) => {
                 let eventArray: AppEvent[] = [];
                 Array.isArray(events) ? eventArray = events : eventArray.push(events)
                 const mapped = eventArray.map((e: any) => {
-                    return {...e, date: (e.date as Timestamp).toDate().toISOString()}
+                    return { ...e, date: e.date.toDate().toISOString() }
                 });
-                return {payload: mapped}
+                return { payload: mapped }
             }
-        },
-        createNewEvent: (state, action) => {
-            state.events.push(action.payload);
-        },
-        updateEvent: (state, action) => {
-            state.events[state.events.findIndex(evt => evt.id === action.payload.id)] = action.payload;
-        },
-        deleteEvent: (state, action) => {
-            state.events.splice(state.events.findIndex(evt => evt.id === action.payload.id), 1);
         }
+
     }
 })
 
-export const { setEvents, createNewEvent, updateEvent, deleteEvent } = eventSlice.actions;
+export const actions = eventSlice.actions as unknown as GenericActions<AppEvent[]>;
+
+// createNewEvent: (state, action) => {
+//     state.events.push(action.payload);
+// },
+// updateEvent: (state, action) => {
+//     state.events[state.events.findIndex(evt => evt.id === action.payload.id)] = action.payload;
+// },
+// deleteEvent: (state, action) => {
+//     state.events.splice(state.events.findIndex(evt => evt.id === action.payload.id), 1);
+// }

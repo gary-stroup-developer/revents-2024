@@ -4,39 +4,26 @@ import EventDetailedInfo from "./EventDetailedInfo"
 import EventDetailedChat from "./EventDetailedChat"
 import EventDetailedSidebar from "./EventDetailedSidebar"
 import { useParams } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "../../../app/store/hooks"
-import { useEffect, useState } from "react"
-import { doc, onSnapshot } from "firebase/firestore"
-import { db } from "../../../app/config/firebase"
-import { setEvents } from "../eventSlice"
-import { toast } from "react-toastify"
+import { useAppSelector } from "../../../app/store/hooks"
+import { useEffect } from "react"
 import LoadingComponent from "../../../app/layout/LoadingComponent"
+import { actions } from "../eventSlice"
+import { useFirestore } from "../../../app/hooks/firestore/useFirestore"
 
 const EventDetailsPage = () => {
-  const {id} = useParams();
-  const event = useAppSelector(state => state.events.events.find(evt => evt.id === id));
-  const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const event = useAppSelector(state => state.events.data.find((evt) => evt.id === id));
+  const { status } = useAppSelector(state => state.events);
+  const { loadDocument } = useFirestore('events');
 
   useEffect(() => {
     if (!id) return;
-    const unsubscribe = onSnapshot(doc(db, 'events', id), {
-      next: doc => {
-        dispatch(setEvents({id: doc.id,...doc.data()}));
-        setLoading(false);
-      },
-      error: err => {
-        console.log(err);
-        toast.error(err.message);
-        setLoading(false);
-      }
-    })
-    return () => unsubscribe();
-  }, [id, dispatch])
-  
-  if(loading) return <LoadingComponent />
+    loadDocument(id, actions)
+  }, [id, loadDocument])
 
-  if(!event) return  <div>No such event</div>;
+  if (status === 'loading') return <LoadingComponent />
+
+  if (!event) return <div>No such event</div>;
 
   return (
     <Grid>

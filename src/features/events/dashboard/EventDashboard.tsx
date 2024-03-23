@@ -1,41 +1,22 @@
 import { Grid } from "semantic-ui-react"
 import EventList from "./EventList"
-import { useAppDispatch, useAppSelector } from "../../../app/store/hooks"
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { db } from "../../../app/config/firebase";
-import { setEvents } from "../eventSlice";
-import { AppEvent } from "../../../types";
+import { useAppSelector } from "../../../app/store/hooks"
+import { useEffect} from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { actions } from "../eventSlice";
+import { useFirestore } from "../../../app/hooks/firestore/useFirestore";
 
 
 const EventDashboard = () =>{
-  const {events} = useAppSelector(state => state.events);
-  const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(true);
+  const {data: events, status} = useAppSelector(state => state.events);
+
+  const {loadCollection} = useFirestore('events');
 
   useEffect(() => {
-    const q = query(collection(db,'events'));
-    const unsubscribe = onSnapshot(q,{
-      next: querySnapshot => {
-        const evts: AppEvent[] = [];
-        querySnapshot.forEach(doc => {
-          evts.push({id: doc.id, ...doc.data()} as AppEvent)
-        })
-        dispatch(setEvents(evts));
-        setLoading(false);
-      },
-      error: err => {
-        console.log(err);
-        setLoading(false);
-      },
-      complete: () => console.log('never will see this because the snapshot stream is never ending')
-    });
-    //cancels the onSnapshot listener aka ends the stream
-    return () => unsubscribe()
-  }, [dispatch])
+    loadCollection(actions)
+  }, [loadCollection])
   
-  if(loading) return <LoadingComponent />
+  if(status === 'loading') return <LoadingComponent />
 
   return (
     <Grid>
